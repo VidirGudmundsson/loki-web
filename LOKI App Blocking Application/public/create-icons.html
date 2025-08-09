@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate LOKI Icons</title>
+</head>
+<body>
+    <canvas id="canvas192" width="192" height="192"></canvas>
+    <canvas id="canvas512" width="512" height="512"></canvas>
+    
+    <script>
+        // Function to create icon
+        function createIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#4A90E2';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Create rounded corners
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // LOKI text
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `bold ${size * 0.15}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('LOKI', size / 2, size / 2);
+            
+            // NFC icon suggestion (simplified)
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = size * 0.02;
+            ctx.beginPath();
+            
+            // Draw concentric arcs to represent NFC waves
+            const centerX = size / 2;
+            const centerY = size * 0.7;
+            
+            for (let i = 1; i <= 3; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, size * 0.08 * i, -Math.PI * 0.3, -Math.PI * 0.7, true);
+                ctx.stroke();
+            }
+        }
+        
+        // Create both icons
+        createIcon('canvas192', 192);
+        createIcon('canvas512', 512);
+        
+        // Instructions
+        document.body.innerHTML += '<h2>Right-click each canvas and "Save image as..."</h2>';
+        document.body.innerHTML += '<p>Save the first as "icon-192.png" and second as "icon-512.png"</p>';
+        document.body.innerHTML += '<p>Place both files in your public folder</p>';
+    </script>
+</body>
+</html>

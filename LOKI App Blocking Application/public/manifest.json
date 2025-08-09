@@ -1,0 +1,35 @@
+{
+  "name": "LOKI - Focus & App Blocking",
+  "short_name": "LOKI",
+  "description": "Block distracting apps using NFC tags to stay focused and productive",
+  "theme_color": "#4A90E2",
+  "background_color": "#0A1628",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "categories": ["productivity", "lifestyle"],
+  "lang": "is",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

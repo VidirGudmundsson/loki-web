@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOKI - Focus & App Blocking</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Theme colors for mobile browsers -->
+  <meta name="theme-color" content="#4A90E2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LOKI">
+  
+  <!-- iOS specific icons -->
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/icon-192.png" type="image/png">
+  
+  <!-- Meta description for app stores -->
+  <meta name="description" content="Block distracting apps using NFC tags to stay focused and productive. Perfect for work, study, and digital wellbeing.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-app-url.vercel.app">
+  <meta property="og:title" content="LOKI - Focus & App Blocking">
+  <meta property="og:description" content="Block distracting apps using NFC tags to stay focused and productive">
+  <meta property="og:image" content="https://your-app-url.vercel.app/icon-512.png">
+  
+  <!-- Prevent zoom on iOS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <style>
+    /* Loading screen */
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0A1628;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    .loading-text {
+      color: #4A90E2;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+    
+    /* Hide loading once app loads */
+    .app-loaded #loading {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loading">
+    <div class="loading-text">LOKI</div>
+  </div>
+  
+  <!-- React app root -->
+  <div id="root"></div>
+  
+  <script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+    
+    // Hide loading screen once React app loads
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.body.classList.add('app-loaded');
+      }, 1000);
+    });
+    
+    // Handle app installation prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install button or notification
+      console.log('App can be installed');
+    });
+    
+    // Track app installation
+    window.addEventListener('appinstalled', (evt) => {
+      console.log('LOKI app was installed');
+    });
+  </script>
+</body>
+</html>
